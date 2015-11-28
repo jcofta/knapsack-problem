@@ -13,10 +13,6 @@
 #include "dynamic.h"
 #include "genetic.h"
 
-/* DEFINITIONS ------------------ */
-#define MAX_SIZE 50
-#define MAX_VALUE 100
-
 struct item_t items[NUMBER_OF_ITEMS];
 
 int main() {

@@ -1,8 +1,10 @@
 #pragma once
 
 /* DEFINITIONS ------------------ */
-#define SIZE_OF_BAG 200
-#define NUMBER_OF_ITEMS 10
+#define SIZE_OF_BAG 25
+#define NUMBER_OF_ITEMS 20
+#define MAX_SIZE 15
+#define MAX_VALUE 15
 
 //#define DEBUG
 
