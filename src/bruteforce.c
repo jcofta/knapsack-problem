@@ -9,7 +9,7 @@
 #include <time.h>
 
 
-void bruteforce(int n, int max, struct item *tab, int *suma, int *subset)
+void bruteforce(int n, int max, struct item_t *tab, int *suma, int *subset)
 {
   int i, b, smax=-1;
   for(i=0; i<(1<<n) ; i++)

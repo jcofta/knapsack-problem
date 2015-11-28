@@ -48,20 +48,23 @@ void mov_genom(int** population, int source, int dest) {
     }
 }
 
-int best_genotype(int** population, int* id) {
-    int i, best_id;
+void best_genotype(int** population, int* best_id, int* best_result, int* best_genotype) {
+    int i, j, id;
     int best = 0;
-    
     for(i=0; i<SIZE_OF_POPULATION; i++) {
-        if (result_function(population[i]) > best) {
-            best = result_function(population[i]);
-            best_id = i;
+        int curr_result = result_function(population[i]);
+        
+        if (curr_result > best) {
+            best = curr_result;
+            id = i;
+            for(j=0; j<NUMBER_OF_ITEMS; j++) {
+                best_genotype[j] = population[i][j];
+            }
         }
     }
 
-    *id = best_id;
-
-    return best;
+    *best_id = id;
+    *best_result = best;
 }
 
 void selection(int** population) {
@@ -77,7 +80,7 @@ void selection(int** population) {
         #endif
         sum += result[i];
     }
-    printf("sum %d\n", sum);
+    //printf("sum %d\n", sum);
 
     //Define probability to be in the next population
     float prob[SIZE_OF_POPULATION];
@@ -183,20 +186,44 @@ void mutation(int** population) {
 }
 
 void genetic(int n, struct item_t* items) {
+    //subfunction
+    void update_best_genotype(int **population, int *id, int *sum, int *genotype) {
+        int i;
+        int curr_id, curr_sum, curr_genotype[NUMBER_OF_ITEMS];
+        best_genotype(population, id, sum, genotype);
+        if(curr_sum > *sum) {
+            *sum = curr_sum;
+            for(i=0; i<NUMBER_OF_ITEMS; i++){
+                genotype[i] = curr_genotype[i];
+            }
+            *id = curr_id;
+        }        
+    }
+
     int** population; 
     malloc_array(&population, SIZE_OF_POPULATION, n);
     generate_population(population, SIZE_OF_POPULATION, n);
-    print_matrix(population, SIZE_OF_POPULATION, n);
+    //print_matrix(population, SIZE_OF_POPULATION, n);
 
     srand(time(NULL));
 
     int a = 40;
-    int curr_best;
+    int i;
+    
+    int b_id, b_sum = 0, b_genotype[NUMBER_OF_ITEMS];
 
     while(a--) {
         selection(population);
-        best_genotype(population, &curr_best);
-        printf("BEST %d\n", curr_best);
+        update_best_genotype(population, &b_id, &b_sum, b_genotype);
+        // best_genotype(population, &id, &sum, genotype);
+        // if(sum > b_sum) {
+        //     b_sum = sum;
+        //     for(i=0; i<NUMBER_OF_ITEMS; i++){
+        //         b_genotype[i] = genotype[i];
+        //     }
+        //     b_id = id;
+        // }
+        //printf("Best sum is %d\n", sum);
         //if costam to przerwij
         //print_matrix(population, SIZE_OF_POPULATION, n);
         crossover(population);
@@ -204,6 +231,7 @@ void genetic(int n, struct item_t* items) {
         mutation(population);
     }
 
-    best_genotype(population, &curr_best);
-    printf("BEST %d\n", curr_best);
+    update_best_genotype(population, &b_id, &b_sum, b_genotype);
+//    best_genotype(population, &id, &sum, genotype);
+    printf("BEST %d\n", b_sum);
 }

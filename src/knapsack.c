@@ -68,6 +68,17 @@ void print_matrix(int *matrix[], int n, int max)
   }
 }
 
+void print_subset ( int n, int subset)
+{
+  int b;
+  for(b=0; b<n; b++) {   //przelatuje po bitach
+     if((1<<b)&subset) { // jezeli dany element zostal wybrany,
+        printf("%d ", b);
+     }
+  }
+  printf("\n");
+}
+
 //
 //
 //
@@ -340,16 +351,4 @@ void print_matrix(int *matrix[], int n, int max)
 //
 //    *suma = value;
 //
-//}
-//
-//
-//void print_subset ( int n, int subset)
-//{
-//   int b;
-//   for(b=0; b<n; b++) {   //przelatuje po bitach
-//      if((1<<b)&subset) { // jezeli dany element zostal wybrany,
-//         printf("%d ", b);
-//      }
-//   }
-//   printf("\n");
 //}

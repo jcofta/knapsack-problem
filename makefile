@@ -6,7 +6,7 @@
 CC = gcc
 CFLAGS  = -Wall -g
 INCLUDES = -Iinc
-INC_MAIN = src/knapsack.o src/genetic.o
+INC_MAIN = src/knapsack.o src/genetic.o src/dynamic.o src/bruteforce.o
 
 # Targets:
 default: app
@@ -18,7 +18,13 @@ src/knapsack.o: src/knapsack.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c src/knapsack.c -o src/knapsack.o
 
 src/genetic.o: src/genetic.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c src/genetic.c -o src/genetic.o
+	$(CC) $(CFLAGS) $(INCLUDES) -c src/genetic.c -o src/genetic.o 
+
+src/dynamic.o: src/dynamic.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c src/dynamic.c -o src/dynamic.o
+
+src/bruteforce.o: src/bruteforce.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c src/bruteforce.c -o src/bruteforce.o
 
 clean:
 	find . -name "*.o" -exec rm {} \;

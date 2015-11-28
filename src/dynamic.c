@@ -8,7 +8,11 @@
 #include <stdio.h>
 #include <time.h>
 
-void dynamic(int n, int max, struct item *tab, int *suma, int *subset)
+void add_result(int id, int *subset){
+   *subset |= (1<<id);
+}
+
+void dynamic(int n, int max, struct item_t *tab, int *suma, int *subset)
 {
   int i,l;
   int **dynamic_tab = calloc ((n+1), sizeof(int));
@@ -32,21 +36,17 @@ void dynamic(int n, int max, struct item *tab, int *suma, int *subset)
    l = max;
 
 
-	while(i) {
-		if(dynamic_tab[i][l] == dynamic_tab[i-1][l]) {
-		}
-		else {
+  while(i) {
+    if(dynamic_tab[i][l] == dynamic_tab[i-1][l]) {
+    }
+    else {
            add_result(i-1, subset);
            l=l-tab[i-1].size;
-		}
-		i--;
+    }
+    i--;
    }
 
-//		print_matrix(dynamic_tab,n,max);
+//    print_matrix(dynamic_tab,n,max);
 
-		*suma = dynamic_tab[n][max];
-}
-
-void add_result(int id, int *subset){
-   *subset |= (1<<id);
+    *suma = dynamic_tab[n][max];
 }

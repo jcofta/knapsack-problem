@@ -32,10 +32,11 @@ void print_matrix(int *matrix[], int n, int max);
 //wyswietla na ekranie elementy z tab (rozmiar i waga)
 void print_items(int n, struct item_t *tab) ;
 
+//wypisuje elementy oznaczone na bitach w subset jako 1
+void print_subset(int n, int subset);
+
 ////wykonuje algorytm optymalny
 //void dynamic(int n, int max, struct item *tab, int *suma, int *subset);
 ////wykonuje algorytm zachlanny
 //void greedy(int n, int max, struct item *tab, int *suma, int *subset);
 //
-////wypisuje elementy oznaczone na bitach w subset jako 1
-//void print_subset ( int n, int subset);
