@@ -44,9 +44,8 @@ void dynamic(int n, int max, struct item_t *tab, int *suma, int *subset)
            l=l-tab[i-1].size;
     }
     i--;
-   }
+  }
 
-//    print_matrix(dynamic_tab,n,max);
-
-    *suma = dynamic_tab[n][max];
+  //print_matrix(dynamic_tab,n,max);
+  *suma = dynamic_tab[n][max];
 }
