@@ -15,7 +15,7 @@ void add_result(int id, int *subset){
 void dynamic(int n, int max, struct item_t *tab, int *suma, int *subset)
 {
   int i,l;
-  int **dynamic_tab = calloc ((n+1), sizeof(int));
+  int **dynamic_tab = calloc ((n+1), sizeof(int*));
   for (i=0;i<(n+1);i++) dynamic_tab[i] = calloc((max+1),sizeof(int));
 
   for(i=1;i<(n+1);i++){
