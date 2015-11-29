@@ -1,3 +1,11 @@
 #include "knapsack.h"
 
-void greedy(int n, int w, struct item *tab, int *suma, int *subset);
+struct sort_t {
+    int id;
+    float f;
+    int size;
+    int value;
+    struct sort_t* Next;
+};
+
+void greedy(int n, int w, struct item_t *tab, int *sum, int *subset);

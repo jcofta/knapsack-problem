@@ -1,15 +1,18 @@
 /*
 	The main file for knapsack-problem project.
+
+    Authors:
+        jcofta
+        ksniatala
 */
 
 /* INCLUDES --------------------- */
 #include <stdio.h>
 #include "knapsack.h"
 
-// ALgorithms
-//TODO
+// Algorithms
 #include "bruteforce.h"
-//#include "greedy.h"
+#include "greedy.h"
 #include "dynamic.h"
 #include "genetic.h"
 
@@ -19,6 +22,7 @@ int main() {
     int sum_bf=0, subset_bf=0;
     int sum_dyn = 0, subset_dyn = 0;
     int sum_gen = 0, subset_gen = 0;
+    int sum_gred=0, subset_gred=0;
 
     //Generate and load array of items
     printf("Generate Items\n");
@@ -31,7 +35,7 @@ int main() {
     printf("Size of bag: %d\n", SIZE_OF_BAG);
     printf("Number of items: %d\n", NUMBER_OF_ITEMS);
 
-    //Do the algorithms
+    /* -- Algorithms --*/
     // Dynamic Algorithm
     printf("\nDynamic algorithm\n");
     dynamic(NUMBER_OF_ITEMS, SIZE_OF_BAG, items, &sum_dyn, &subset_dyn);
@@ -49,6 +53,12 @@ int main() {
     genetic(NUMBER_OF_ITEMS, items, &sum_gen, &subset_gen);
     printf("Sum genetic: %d\n", sum_gen);
     print_subset(NUMBER_OF_ITEMS,subset_gen);
+
+    // Greedy Algorithm
+    printf("\nGreedy algorithm\n");
+    greedy(NUMBER_OF_ITEMS, SIZE_OF_BAG, items, &sum_gred, &subset_gred);
+    printf("Sum genetic: %d\n", sum_gred);
+    print_subset(NUMBER_OF_ITEMS,subset_gred);
 
     return 0;
 }
