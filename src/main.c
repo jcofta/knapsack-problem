@@ -18,6 +18,7 @@ struct item_t items[NUMBER_OF_ITEMS];
 int main() {
     int sum_bf=0, subset_bf=0;
     int sum_dyn = 0, subset_dyn = 0;
+    int sum_gen = 0, subset_gen = 0;
 
     //Generate and load array of items
     printf("Generate Items\n");
@@ -32,21 +33,22 @@ int main() {
 
     //Do the algorithms
     // Dynamic Algorithm
-    printf("Dynamic algorithm\n");
+    printf("\nDynamic algorithm\n");
     dynamic(NUMBER_OF_ITEMS, SIZE_OF_BAG, items, &sum_dyn, &subset_dyn);
     printf("Sum dynamic: %d\n", sum_dyn);
     print_subset(NUMBER_OF_ITEMS,subset_dyn);
 
     // BruteForce Algorithm
-    printf("BruteForce algorithm\n");
+    printf("\nBruteForce algorithm\n");
     bruteforce(NUMBER_OF_ITEMS, SIZE_OF_BAG, items, &sum_bf, &subset_bf);
     printf("Sum bruteforce: %d\n", sum_bf);
     print_subset(NUMBER_OF_ITEMS,subset_bf);
 
-
     // Genetic Algorithm
-    printf("Genetic algorithm\n");
-    genetic(NUMBER_OF_ITEMS, items);
+    printf("\nGenetic algorithm\n");
+    genetic(NUMBER_OF_ITEMS, items, &sum_gen, &subset_gen);
+    printf("Sum genetic: %d\n", sum_gen);
+    print_subset(NUMBER_OF_ITEMS,subset_gen);
 
     return 0;
 }

@@ -8,10 +8,6 @@
 #include <stdio.h>
 #include <time.h>
 
-void add_result(int id, int *subset){
-   *subset |= (1<<id);
-}
-
 void dynamic(int n, int max, struct item_t *tab, int *suma, int *subset)
 {
   int i,l;

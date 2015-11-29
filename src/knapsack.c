@@ -2,9 +2,7 @@
 #include <stdio.h>
 #include "knapsack.h"
 
-#define ITEMS_FILE "items.db"
-
-struct to_sort *head =NULL;
+//struct to_sort *head =NULL;
 
 //generate items and save them to file
 void generate_items(int max_s, int max_v, int n)
@@ -50,12 +48,6 @@ void print_items(int n, struct item_t *tab) {
 void print_matrix(int *matrix[], int n, int max)
 {
    int i,j;
-   // printf("    ");
-   // for( i=0; i<=max; i++)
-   //     printf("%2d ", i);
-   // printf("\n    ");
-   // for( i=0; i<=max; i++)
-   //     printf(" - ", i);
    printf("\n");
 
   for( i=0;i<n;i++)
@@ -72,6 +64,7 @@ void print_matrix(int *matrix[], int n, int max)
 void print_subset ( int n, int subset)
 {
   int b;
+  printf("Chosen items: ");
   for(b=0; b<n; b++) {   //przelatuje po bitach
      if((1<<b)&subset) { // jezeli dany element zostal wybrany,
         printf("%d ", b);
@@ -80,15 +73,10 @@ void print_subset ( int n, int subset)
   printf("\n");
 }
 
-//
-//
-//
-//
-//void add_result(int id, int *subset){
-//    *subset |= (1<<id);
-//}
-//
-//
+void add_result(int id, int *subset){
+   *subset |= (1<<id);
+}
+
 //void swap(struct to_sort* l, struct to_sort* p) {
 //    struct to_sort temp = *l;
 //    *l = *p;

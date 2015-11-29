@@ -1,28 +1,22 @@
 #pragma once
 
 /* DEFINITIONS ------------------ */
-#define SIZE_OF_BAG 25
-#define NUMBER_OF_ITEMS 20
-#define MAX_SIZE 15
+#define SIZE_OF_BAG 50
+#define NUMBER_OF_ITEMS 10
+#define MAX_SIZE 10
 #define MAX_VALUE 15
+
+#define ITEMS_FILE "items.db"
 
 //#define DEBUG
 
-//struktura do przechowywania w³aœciwoœci pojedynczego elementu
+//sturcture to store info about single item
 struct item_t {
-   int size;  //rozmiar
-   int value; //wartoœæ
+   int size;
+   int value;
 };
 
-//struct to_sort {
-//    int id;
-//    float f;
-//    int size;
-//    int value;
-//    struct to_sort* Next;
-//};
-
-//generuje i zapisuje do pliku
+//generate items and save them to a file
 void generate_items(int max_s, int max_v, int n);
 //wczytuje do pliku
 void load_items(int n, struct item_t *tab);
@@ -36,6 +30,9 @@ void print_items(int n, struct item_t *tab) ;
 
 //wypisuje elementy oznaczone na bitach w subset jako 1
 void print_subset(int n, int subset);
+
+//Add chosen item to subset
+void add_result(int id, int *subset);
 
 ////wykonuje algorytm optymalny
 //void dynamic(int n, int max, struct item *tab, int *suma, int *subset);
