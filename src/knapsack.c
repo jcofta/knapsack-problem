@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "knapsack.h"
 
 //struct to_sort *head =NULL;
@@ -21,13 +22,19 @@ void generate_items(int max_s, int max_v, int n)
 }
 
 //load items from file
-void load_items(int n, struct item_t *tab){
+int load_items(int n, struct item_t *tab){
     FILE *in_f = fopen(ITEMS_FILE,"r");
-    int i;
-    for(i=0;i<n;i++) {
-        fscanf(in_f, "%d %d", &tab[i].size, &tab[i].value);
+    if (in_f != NULL) {
+        int i;
+        for(i=0;i<n;i++) {
+            fscanf(in_f, "%d %d", &tab[i].size, &tab[i].value);
+        }
+    } else {
+        return -1;
     }
+
     fclose(in_f);
+    return 0;
 }
 
 void malloc_array(int*** arr, int n, int m)
@@ -36,7 +43,7 @@ void malloc_array(int*** arr, int n, int m)
   *arr = (int**)malloc(n*sizeof(int*));
   for(i=0; i<n; i++)
     (*arr)[i] = (int*)malloc(m*sizeof(int));
-} 
+}
 
 void print_items(int n, struct item_t *tab) {
    int i;

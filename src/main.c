@@ -25,11 +25,15 @@ int main() {
     int sum_gred=0, subset_gred=0;
 
     //Generate and load array of items
-    printf("Generate Items\n");
-    generate_items(MAX_SIZE, MAX_VALUE, NUMBER_OF_ITEMS);
-    printf("Load items\n");
-    load_items(NUMBER_OF_ITEMS, items);
-    
+    if ( load_items(NUMBER_OF_ITEMS, items) < 0) {
+        printf("Generate items\n");
+        generate_items(MAX_SIZE, MAX_VALUE, NUMBER_OF_ITEMS);
+        printf("Load items\n");
+        load_items(NUMBER_OF_ITEMS, items);
+    } else {
+        printf("Loaded items from file\n");
+    }
+
     //Initial info
     print_items(NUMBER_OF_ITEMS, items);
     printf("Size of bag: %d\n", SIZE_OF_BAG);

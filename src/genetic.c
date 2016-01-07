@@ -147,11 +147,11 @@ void crossover(int** population) {
                     population[i][k] = population[j][k];
                     population[j][k] = temp;
                 }
-                for( ; k<NUMBER_OF_ITEMS; k++) {
-                    temp = population[j][k];
-                    population[j][k] = population[i][k];
-                    population[i][k] = temp;                    
-                }
+                //for( ; k<NUMBER_OF_ITEMS; k++) {
+                //    temp = population[j][k];
+                //    population[j][k] = population[i][k];
+                //    population[i][k] = temp;                    
+                //}
             }
 
         }
@@ -196,7 +196,7 @@ void genetic(int n, struct item_t* items, int* sum, int* subset) {
                 genotype[i] = curr_genotype[i];
             }
             *id = curr_id;
-        }        
+        }
     }
 
     int** population;

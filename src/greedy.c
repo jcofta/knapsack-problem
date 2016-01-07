@@ -18,7 +18,7 @@ void greedy(int n, int w, struct item_t *tab, int *sum, int *subset) {
    struct sort_t *st = malloc(n*sizeof(struct sort_t));
    int i;
 
-   //Liczenie stosunków
+   //Counting ratios
    for(i=0; i<n; i++) {
       st[i].f = ((float)tab[i].value)/tab[i].size;
       st[i].id = i;
@@ -83,7 +83,7 @@ void add_to_list( struct sort_t *frac)
       {
         tmp->Next = prev->Next;
         prev->Next = tmp;
-      } 
+      }
       else {
         tmp->Next = head;
         head = tmp;

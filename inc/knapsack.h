@@ -3,7 +3,7 @@
 /* DEFINITIONS ------------------ */
 #define SIZE_OF_BAG 50
 #define NUMBER_OF_ITEMS 10
-#define MAX_SIZE 10
+#define MAX_SIZE 20
 #define MAX_VALUE 15
 
 #define ITEMS_FILE "items.db"
@@ -19,7 +19,7 @@ struct item_t {
 //generate items and save them to a file
 void generate_items(int max_s, int max_v, int n);
 //wczytuje do pliku
-void load_items(int n, struct item_t *tab);
+int load_items(int n, struct item_t *tab);
 
 void malloc_array(int*** arr, int n, int m);
 
