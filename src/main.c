@@ -31,8 +31,15 @@ int main() {
     int sum_gen = 0, subset_gen = 0;
     int sum_gred=0, subset_gred=0;
 
-    FILE *ft = fopen("time.txt", "a");
-    fprintf(ft, "n\tdyn\t\tbrut\t\tgen\t\tgreed\n");
+    FILE *tmp;
+    FILE *ft;
+    if( (tmp = fopen("time.txt", "r")) != NULL ) {
+        fclose(tmp);
+        ft = fopen("time.txt", "a");
+    } else {
+        ft = fopen("time.txt", "a");
+        fprintf(ft, "NITEM\tSBAG\tPOP\ttdyn\t\ttbrut\t\ttgen\t\ttgred\t\tsum_dyn\tsum_gen\tsum_gred\n");
+    }
 
     srand(time(0));
 
@@ -46,9 +53,6 @@ int main() {
         printf("Loaded items from file\n");
     }
 */
-    int i;
-    for(i=5; i<=25; i++)
-    {
     //Generate and load array of items
     generate_items(MAX_SIZE, MAX_VALUE, NUMBER_OF_ITEMS);
     load_items(NUMBER_OF_ITEMS, items);
@@ -57,6 +61,7 @@ int main() {
     print_items(NUMBER_OF_ITEMS, items);
     printf("Size of bag: %d\n", SIZE_OF_BAG);
     printf("Number of items: %d\n", NUMBER_OF_ITEMS);
+    printf("Population: %d\n", SIZE_OF_POPULATION);
 
     /* -- Algorithms --*/
     // Dynamic Algorithm
@@ -109,9 +114,7 @@ int main() {
     printf("Sum genetic: %d\n", sum_gred);
     print_subset(NUMBER_OF_ITEMS,subset_gred);
 
-    fprintf(ft, "%d\t%.6f\t%.6f\t%.6f\t%.6f\n", i, tdyn, tbrut, tgen, tgred);
-
-    }
+    fprintf(ft, "%d\t%d\t%d\t%.6f\t%.6f\t%.6f\t%.6f\t%.d\t%.d\t%.d\n", NUMBER_OF_ITEMS, SIZE_OF_BAG, SIZE_OF_POPULATION,  tdyn, tbrut, tgen, tgred, sum_dyn, sum_gen, sum_gred);
 
     fclose(ft);
 

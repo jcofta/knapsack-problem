@@ -8,7 +8,10 @@
 #include <stdio.h>
 #include <time.h>
 
+#ifndef SIZE_OF_POPULATION
 #define SIZE_OF_POPULATION  100
+#endif
+
 #define MUTATION_RATE       0.01f
 
 extern struct item_t items[NUMBER_OF_ITEMS];
@@ -37,7 +40,7 @@ int result_function(int* genotype) {
     }
 
     if (weight > SIZE_OF_BAG) {
-        return 0;
+        return 1;
     } else {
         return value;
     }

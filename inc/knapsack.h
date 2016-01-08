@@ -1,8 +1,14 @@
 #pragma once
 
 /* DEFINITIONS ------------------ */
+#ifndef SIZE_OF_BAG
 #define SIZE_OF_BAG 50
+#endif
+
+#ifndef NUMBER_OF_ITEMS
 #define NUMBER_OF_ITEMS 10
+#endif
+
 #define MAX_SIZE 20
 #define MAX_VALUE 15
 
