@@ -8,15 +8,13 @@
 #include <stdio.h>
 #include <time.h>
 
-#define SIZE_OF_POPULATION  200
+#define SIZE_OF_POPULATION  100
 #define MUTATION_RATE       0.01f
 
 extern struct item_t items[NUMBER_OF_ITEMS];
 
 void generate_population(int** population, int n_popul, int n_items) {
     int i,j;
-
-    srand(time(NULL));
 
     for(i=0; i<n_popul; i++)
     for(j=0; j<n_items; j++) {

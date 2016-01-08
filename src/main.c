@@ -31,9 +31,12 @@ int main() {
     int sum_gen = 0, subset_gen = 0;
     int sum_gred=0, subset_gred=0;
 
-	srand(time(0));
+    FILE *ft = fopen("time.txt", "a");
+    fprintf(ft, "n\tdyn\t\tbrut\t\tgen\t\tgreed\n");
 
-    //Generate and load array of items
+    srand(time(0));
+
+/*
     if ( load_items(NUMBER_OF_ITEMS, items) < 0) {
         printf("Generate items\n");
         generate_items(MAX_SIZE, MAX_VALUE, NUMBER_OF_ITEMS);
@@ -42,6 +45,13 @@ int main() {
     } else {
         printf("Loaded items from file\n");
     }
+*/
+    int i;
+    for(i=5; i<=25; i++)
+    {
+    //Generate and load array of items
+    generate_items(MAX_SIZE, MAX_VALUE, NUMBER_OF_ITEMS);
+    load_items(NUMBER_OF_ITEMS, items);
 
     //Initial info
     print_items(NUMBER_OF_ITEMS, items);
@@ -56,12 +66,7 @@ int main() {
     dynamic(NUMBER_OF_ITEMS, SIZE_OF_BAG, items, &sum_dyn, &subset_dyn);
     clock_gettime(CLOCK_MONOTONIC, &tdyn2);
 
-    double tdyn = 1000.0*tdyn2.tv_sec + 1e-6*tdyn2.tv_nsec
-	                       - (1000.0*tdyn1.tv_sec + 1e-6*tdyn1.tv_nsec);
-
-    double tdyn3 = (tdyn2.tv_sec - tdyn1.tv_sec) + (double) (tdyn2.tv_nsec - tdyn1.tv_nsec) * 1e-9;
-
-    printf("Dynamic time: %.6f ms, %.6f s\n", tdyn, tdyn3);
+    double tdyn = 1000.0*tdyn2.tv_sec + 1e-6*tdyn2.tv_nsec - (1000.0*tdyn1.tv_sec + 1e-6*tdyn1.tv_nsec);
 
     printf("Sum dynamic: %d\n", sum_dyn);
     printf("Subset dynamic: %d\n", subset_dyn);
@@ -74,12 +79,7 @@ int main() {
     bruteforce(NUMBER_OF_ITEMS, SIZE_OF_BAG, items, &sum_bf, &subset_bf);
     clock_gettime(CLOCK_MONOTONIC, &tbrut2);
 
-    double tbrut = 1000.0*tbrut2.tv_sec + 1e-6*tbrut2.tv_nsec
-	                       - (1000.0*tbrut1.tv_sec + 1e-6*tbrut1.tv_nsec);
-
-    double tbrut3 = (tbrut2.tv_sec - tbrut1.tv_sec) + (double) (tbrut2.tv_nsec - tbrut1.tv_nsec) * 1e-9;
-
-    printf("Brut time: %.6f ms, %.6f s\n", tbrut, tbrut3);
+    double tbrut = 1000.0*tbrut2.tv_sec + 1e-6*tbrut2.tv_nsec - (1000.0*tbrut1.tv_sec + 1e-6*tbrut1.tv_nsec);
 
     printf("Sum bruteforce: %d\n", sum_bf);
     //printf("Subset brutforce: %d\n", subset_bf);
@@ -92,11 +92,7 @@ int main() {
     genetic(NUMBER_OF_ITEMS, items, &sum_gen, &subset_gen);
     clock_gettime(CLOCK_MONOTONIC, &tgen2);
 
-    double tgen = 1000.0*tgen2.tv_sec + 1e-6*tgen2.tv_nsec
-	                       - (1000.0*tgen1.tv_sec + 1e-6*tgen1.tv_nsec);
-    double tgen3 = (tgen2.tv_sec - tgen1.tv_sec) + (double) (tgen2.tv_nsec - tgen1.tv_nsec) * 1e-9;
-
-    printf("Genetic time: %.6f ms, %.6f s\n", tgen, tgen3);
+    double tgen = 1000.0*tgen2.tv_sec + 1e-6*tgen2.tv_nsec - (1000.0*tgen1.tv_sec + 1e-6*tgen1.tv_nsec);
 
     printf("Sum genetic: %d\n", sum_gen);
     print_subset(NUMBER_OF_ITEMS,subset_gen);
@@ -108,13 +104,16 @@ int main() {
     greedy(NUMBER_OF_ITEMS, SIZE_OF_BAG, items, &sum_gred, &subset_gred);
     clock_gettime(CLOCK_MONOTONIC, &tgred2);
 
-    double tgred = 1000.0*tgred2.tv_sec + 1e-6*tgred2.tv_nsec
-	                       - (1000.0*tgred1.tv_sec + 1e-6*tgred1.tv_nsec);
-    double tgred3 = (tgred2.tv_sec - tgred1.tv_sec) + (double) (tgred2.tv_nsec - tgred1.tv_nsec) * 1e-9;
+    double tgred = 1000.0*tgred2.tv_sec + 1e-6*tgred2.tv_nsec - (1000.0*tgred1.tv_sec + 1e-6*tgred1.tv_nsec);
 
-    printf("Greedy time: %.6f ms, %.6f s\n", tgred, tgred3);
     printf("Sum genetic: %d\n", sum_gred);
     print_subset(NUMBER_OF_ITEMS,subset_gred);
+
+    fprintf(ft, "%d\t%.6f\t%.6f\t%.6f\t%.6f\n", i, tdyn, tbrut, tgen, tgred);
+
+    }
+
+    fclose(ft);
 
     return 0;
 }

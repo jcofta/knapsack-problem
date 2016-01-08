@@ -10,7 +10,6 @@ void generate_items(int max_s, int max_v, int n)
 {
    int i,v,s;
    FILE *out_f = fopen(ITEMS_FILE,"w");
-   srand(time(NULL));
    for(i=0;i<n;i++)
    {
       s=rand()%max_s+1;
