@@ -1,5 +1,5 @@
 /*
-	The main file for knapsack-problem project.
+    The main file for knapsack-problem project.
 
     Authors:
         jcofta
@@ -26,6 +26,7 @@ int main() {
     struct timespec tbrut1,tbrut2;
     struct timespec tgen1,tgen2;
     struct timespec tgred1,tgred2;
+
     int sum_bf=0, subset_bf=0;
     int sum_dyn = 0, subset_dyn = 0;
     int sum_gen = 0, subset_gen = 0;
@@ -33,6 +34,8 @@ int main() {
 
     FILE *tmp;
     FILE *ft;
+
+    //Check if file exist and add a header at the beginning
     if( (tmp = fopen("time.txt", "r")) != NULL ) {
         fclose(tmp);
         ft = fopen("time.txt", "a");
@@ -58,12 +61,13 @@ int main() {
     load_items(NUMBER_OF_ITEMS, items);
 
     //Initial info
+    printf("Loaded items:\n");
     print_items(NUMBER_OF_ITEMS, items);
     printf("Size of bag: %d\n", SIZE_OF_BAG);
     printf("Number of items: %d\n", NUMBER_OF_ITEMS);
-    printf("Population: %d\n", SIZE_OF_POPULATION);
+    printf("Population(genetic): %d\n", SIZE_OF_POPULATION);
 
-    /* -- Algorithms --*/
+    /* -- Algorithms -- */
     // Dynamic Algorithm
     printf("\nDynamic algorithm\n");
 
@@ -72,10 +76,11 @@ int main() {
     clock_gettime(CLOCK_MONOTONIC, &tdyn2);
 
     double tdyn = 1000.0*tdyn2.tv_sec + 1e-6*tdyn2.tv_nsec - (1000.0*tdyn1.tv_sec + 1e-6*tdyn1.tv_nsec);
+    printf("Dynamic time: %.6f ms\n", tdyn);
 
     printf("Sum dynamic: %d\n", sum_dyn);
-    printf("Subset dynamic: %d\n", subset_dyn);
     print_subset(NUMBER_OF_ITEMS,subset_dyn);
+
 
     // BruteForce Algorithm
     printf("\nBruteForce algorithm\n");
@@ -85,10 +90,11 @@ int main() {
     clock_gettime(CLOCK_MONOTONIC, &tbrut2);
 
     double tbrut = 1000.0*tbrut2.tv_sec + 1e-6*tbrut2.tv_nsec - (1000.0*tbrut1.tv_sec + 1e-6*tbrut1.tv_nsec);
+    printf("Brute-force time: %.6f ms\n", tbrut);
 
     printf("Sum bruteforce: %d\n", sum_bf);
-    //printf("Subset brutforce: %d\n", subset_bf);
     print_subset(NUMBER_OF_ITEMS,subset_bf);
+
 
     // Genetic Algorithm
     printf("\nGenetic algorithm\n");
@@ -98,9 +104,11 @@ int main() {
     clock_gettime(CLOCK_MONOTONIC, &tgen2);
 
     double tgen = 1000.0*tgen2.tv_sec + 1e-6*tgen2.tv_nsec - (1000.0*tgen1.tv_sec + 1e-6*tgen1.tv_nsec);
+    printf("Genetic time: %.6f ms\n", tgen);
 
     printf("Sum genetic: %d\n", sum_gen);
     print_subset(NUMBER_OF_ITEMS,subset_gen);
+
 
     // Greedy Algorithm
     printf("\nGreedy algorithm\n");
@@ -110,10 +118,13 @@ int main() {
     clock_gettime(CLOCK_MONOTONIC, &tgred2);
 
     double tgred = 1000.0*tgred2.tv_sec + 1e-6*tgred2.tv_nsec - (1000.0*tgred1.tv_sec + 1e-6*tgred1.tv_nsec);
+    printf("Greedy time: %.6f ms\n", tgred);
 
     printf("Sum genetic: %d\n", sum_gred);
     print_subset(NUMBER_OF_ITEMS,subset_gred);
 
+
+    //Save results into the file
     fprintf(ft, "%d\t%d\t%d\t%.6f\t%.6f\t%.6f\t%.6f\t%.d\t%.d\t%.d\n", NUMBER_OF_ITEMS, SIZE_OF_BAG, SIZE_OF_POPULATION,  tdyn, tbrut, tgen, tgred, sum_dyn, sum_gen, sum_gred);
 
     fclose(ft);

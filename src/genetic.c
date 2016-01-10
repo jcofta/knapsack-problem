@@ -16,13 +16,13 @@
 
 extern struct item_t items[NUMBER_OF_ITEMS];
 
+/* Randomly generate population */
 void generate_population(int** population, int n_popul, int n_items) {
     int i,j;
 
     for(i=0; i<n_popul; i++)
     for(j=0; j<n_items; j++) {
-    	(population)[i][j] = rand()%2;
-    	// printf("pop[%d][%d] = %d\n_items", i, j, population[i][j]);
+        (population)[i][j] = rand()%2;
     }
 }
 
@@ -46,12 +46,13 @@ int result_function(int* genotype) {
     }
 }
 
+/* Find best genotype among whole population */
 void best_genotype(int** population, int* best_id, int* best_result, int* best_genotype) {
     int i, j, id;
     int best = 0;
     for(i=0; i<SIZE_OF_POPULATION; i++) {
         int curr_result = result_function(population[i]);
-        
+
         if (curr_result > best) {
             best = curr_result;
             id = i;
@@ -65,6 +66,7 @@ void best_genotype(int** population, int* best_id, int* best_result, int* best_g
     *best_result = best;
 }
 
+/* Copy one genotype to pointed place */
 void mov_genom(int** population, int source, int dest) {
     int i;
     for(i = 0; i<NUMBER_OF_ITEMS; i++) {
@@ -77,13 +79,13 @@ void selection(int** population) {
     int sum = 0;
     int result[SIZE_OF_POPULATION];
 
-    //Check how good is every genotype of the population
+    //Check how good is every genotype in the population
     for(i=0; i<SIZE_OF_POPULATION; i++) {
         result[i] = result_function(population[i]);
         sum += result[i];
     }
 
-    //Define probability to be in the next population
+    //Define probability for every genotype to be in the next population
     float prob[SIZE_OF_POPULATION];
     float curr_prob = 0;
     for(i=0; i<SIZE_OF_POPULATION; i++) {
@@ -92,11 +94,11 @@ void selection(int** population) {
         prob[i] = curr_prob;
     }
 
-    //TODO Is it really needed?
-    int is_chosen[SIZE_OF_POPULATION];
+    //Clean the array
+    int count_chosen[SIZE_OF_POPULATION];
     for(i=0; i<SIZE_OF_POPULATION; i++)
-        is_chosen[i] = 0;
-    
+        count_chosen[i] = 0;
+
     //Select new population
     for(i=0; i<SIZE_OF_POPULATION; i++) {
         float key = (float)(rand()%sum);
@@ -104,22 +106,22 @@ void selection(int** population) {
 
         for(j=0; j<SIZE_OF_POPULATION; j++) {
             if(key <= prob[j]) {
-                is_chosen[j]++;
+                count_chosen[j]++;
                 break;
             }
         }
     }
 
-    //Clone chosen genotype
+    //Clone chosen genotypes (replace those which are to be removed)
     int pos_last_dead = 0;
     int k;
     for(i=0; i<SIZE_OF_POPULATION; i++) {
-        if (is_chosen[i] > 0) {
-            for(j=0; j<is_chosen[i]; j++) {
+        if (count_chosen[i] > 0) {
+            for(j=0; j<count_chosen[i]; j++) {
                 for(k = pos_last_dead; k < SIZE_OF_POPULATION; ++k){
-                    if (is_chosen[k] == 0) {
+                    if (count_chosen[k] == 0) {
                         pos_last_dead = k + 1;
-                        mov_genom(population, i, k);    
+                        mov_genom(population, i, k);
                         break;
                     }
                 }
@@ -129,9 +131,9 @@ void selection(int** population) {
 
 }
 
+/* Crossover function */
 void crossover(int** population) {
     int i,j;
-    
 
     for(i=0; i<SIZE_OF_POPULATION; i++) {
         for(j=i+1; j<SIZE_OF_POPULATION; j++) {
@@ -148,24 +150,18 @@ void crossover(int** population) {
                     population[i][k] = population[j][k];
                     population[j][k] = temp;
                 }
-                //for( ; k<NUMBER_OF_ITEMS; k++) {
-                //    temp = population[j][k];
-                //    population[j][k] = population[i][k];
-                //    population[i][k] = temp;                    
-                //}
             }
-
         }
     }
 }
 
+/* Mutation function */
 void mutation(int** population) {
     int mod = MUTATION_RATE * NUMBER_OF_ITEMS * SIZE_OF_POPULATION;
     #ifdef DEBUG
     printf("Mutation %d\n", mod);
     #endif
-    
-    
+
     int i;
     for(i=0; i<mod; i++) {
         int x = rand()%SIZE_OF_POPULATION;
@@ -185,8 +181,11 @@ void print_genotype(int* genotype) {
     printf("\n");
 }
 
+/*
+ * The main function of genetic algorithm
+ */
 void genetic(int n, struct item_t* items, int* sum, int* subset) {
-    //subfunction
+    //subfunction - find the best result
     void update_best_genotype(int **population, int *id, int *sum, int *genotype) {
         int i;
         int curr_id, curr_sum, curr_genotype[NUMBER_OF_ITEMS];
@@ -201,14 +200,13 @@ void genetic(int n, struct item_t* items, int* sum, int* subset) {
     }
 
     int** population;
-    int i, counter = 40; //for the main loop
+    int i;
     int b_id, b_sum = 0, b_genotype[NUMBER_OF_ITEMS];
 
     malloc_array(&population, SIZE_OF_POPULATION, n);
-
     generate_population(population, SIZE_OF_POPULATION, n);
-    //print_matrix(population, SIZE_OF_POPULATION, n);
 
+    int counter = 40;
     while(counter--) {
         selection(population);
         update_best_genotype(population, &b_id, &b_sum, b_genotype);
